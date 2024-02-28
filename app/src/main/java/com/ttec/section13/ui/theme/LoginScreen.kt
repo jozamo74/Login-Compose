@@ -1,6 +1,7 @@
 package com.ttec.section13.ui.theme
 
 import android.app.Activity
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -107,9 +108,15 @@ fun Body(modifier: Modifier) {
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
-        Email(email) { email = it }
+        Email(email) {
+            email = it
+            isLoginEnable = enableLogin(email, pass)
+        }
         Spacer(modifier = Modifier.size(4.dp))
-        Password(pass) {pass = it}
+        Password(pass) {
+            pass = it
+            isLoginEnable = enableLogin(email, pass)
+        }
         Spacer(modifier = Modifier.size(8.dp))
         Forgotpassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
@@ -174,7 +181,7 @@ fun LoginButton(loginEnable: Boolean) {
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF4EA8E9),
+            containerColor = Color(0xFF2B9BEB),
             disabledContainerColor = Color(0xFF4EA8E9),
             contentColor = Color.White,
             disabledContentColor = Color.White
@@ -273,4 +280,7 @@ fun Header(modifier: Modifier) {
         contentDescription = "close app",
         modifier = modifier.clickable { activity.finish() })
 }
+
+fun enableLogin(email: String, pass: String) =
+    Patterns.EMAIL_ADDRESS.matcher(email).matches() && pass.length > 6
 
